@@ -14,22 +14,16 @@ public class Persona {
     private String apellido_materno;
     private String nombres;    
     private Date fecha_nacimiento;
-    private Integer id_tipo_documento;
+    private Long id_tipo_documento;
     private String ndocumento;
     private String direccion;
-    private String idubigeo;    
-
-    public Long getId_persona() {
-        return id_persona;
-    }
-
-    public String getNdocumento() {
-        return ndocumento;
-    }
+    private String idubigeo;
     
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_documento", referencedColumnName = "id_tipo_documento",insertable=false, updatable=false )    
+    private TipoDocumento tipo_documento;
     
-    @Override
-    public String toString() {
-        return "Persona{" + "id_persona=" + id_persona + ", apellido_paterno=" + apellido_paterno + ", apellido_materno=" + apellido_materno + ", nombres=" + nombres + ", fecha_nacimiento=" + fecha_nacimiento + ", id_tipo_documento=" + id_tipo_documento + ", ndocumento=" + ndocumento + ", direccion=" + direccion + ", idubigeo=" + idubigeo + '}';
-    }
+    @ManyToOne
+    @JoinColumn(name = "idubigeo", referencedColumnName = "idubigeo",insertable=false, updatable=false)    
+    private Ubigeo ubigeo;    
 }

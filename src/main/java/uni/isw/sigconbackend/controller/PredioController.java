@@ -12,87 +12,86 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import uni.isw.sigconbackend.model.Persona;
-import uni.isw.sigconbackend.service.PersonaService;
-
+import uni.isw.sigconbackend.model.Predio;
+import uni.isw.sigconbackend.service.PredioService;
 @RestController
-@RequestMapping(path="api/v1/persona")
-public class PersonaController {
+@RequestMapping(path="api/v1/predio")
+public class PredioController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    private PersonaService personaService;
+    private PredioService predioService;
       
     @RequestMapping(value = "/listar", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Persona>> getPersonas() {
+    public ResponseEntity<List<Predio>> getPredios() {
             logger.info(">listar");
 
-            List<Persona> listaPersonas = null;
+            List<Predio> listaPredios = null;
             try {
-                    listaPersonas = personaService.getPersonas();
+                    listaPredios = predioService.getPredios();
             } catch (Exception e) {
                     logger.error("Unexpected Exception caught.", e);
                     return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
             logger.info(">listar");            
             
-            return new ResponseEntity<>(listaPersonas, HttpStatus.OK);
+            return new ResponseEntity<>(listaPredios, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Persona> getPersona(@RequestBody Optional<Persona> persona) {
-            logger.info(">search" +  persona.toString());
+    public ResponseEntity<Predio> getPredio(@RequestBody Optional<Predio> predio) {
+            logger.info(">search" +  predio.toString());
             try {
-                    persona = personaService.getPersona(persona.get().getId_persona());                    
+                    predio = predioService.getPredio(predio.get().getId_predio());                    
                     
             } catch (Exception e) {
                     logger.error("Unexpected Exception caught.", e);
                     return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            logger.info(">search" +  persona.toString());
-            return new ResponseEntity<>(persona.get(), HttpStatus.OK);
+            logger.info(">search" +  predio.toString());
+            return new ResponseEntity<>(predio.get(), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/insert", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)	 																		  
-    public ResponseEntity<Persona> agregar(@RequestBody Persona persona){
+    public ResponseEntity<Predio> agregar(@RequestBody Predio predio){
 
-        logger.info(">agregar: " + persona.toString());        
+        logger.info(">agregar: " + predio.toString());        
         try{                  
-            personaService.saveOrUpdate(persona);
+            predioService.saveOrUpdate(predio);
         } catch(Exception e){
             logger.error("Unexpected Exception caught. "+ e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        logger.info(">agregar: " + persona.toString()); 
-        return new ResponseEntity<>(persona, HttpStatus.OK);
+        logger.info(">agregar: " + predio.toString()); 
+        return new ResponseEntity<>(predio, HttpStatus.OK);
     } 
     
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)	 																		  
-    public ResponseEntity<Persona> actualizar(@RequestBody Persona persona){
+    public ResponseEntity<Predio> actualizar(@RequestBody Predio predio){
 
-        logger.info(">actualizar: " + persona.toString());                
+        logger.info(">actualizar: " + predio.toString());                
         try{             
-             personaService.saveOrUpdate(persona);
+             predioService.saveOrUpdate(predio);
         } catch(Exception e){
             logger.error("Unexpected Exception caught. "+ e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        logger.info(">actualizar: " + persona.toString());                
-        return new ResponseEntity<>(persona, HttpStatus.OK);
+        logger.info(">actualizar: " + predio.toString());                
+        return new ResponseEntity<>(predio, HttpStatus.OK);
     } 
     
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)	 																		  
-    public ResponseEntity<Persona> delete(@RequestBody Optional<Persona> persona){
+    public ResponseEntity<Predio> delete(@RequestBody Optional<Predio> predio){
 
-        logger.info(">eliminar: " + persona.toString() );                
+        logger.info(">eliminar: " + predio.toString() );                
         try{
-            persona = personaService.getPersona(persona.get().getId_persona());            
-            if (persona.isPresent())            
-                personaService.delete(persona.get().getId_persona());
+            predio = predioService.getPredio(predio.get().getId_predio());            
+            if (predio.isPresent())            
+                predioService.delete(predio.get().getId_predio());
         } catch(Exception e){
             logger.error("Unexpected Exception caught. "+ e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        logger.info(">eliminar: " + persona.toString() );                
-        return new ResponseEntity<>(persona.get(), HttpStatus.OK);
+        logger.info(">eliminar: " + predio.toString() );                
+        return new ResponseEntity<>(predio.get(), HttpStatus.OK);
     } 
 }

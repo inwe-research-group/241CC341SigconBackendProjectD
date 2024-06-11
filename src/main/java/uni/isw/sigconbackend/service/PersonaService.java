@@ -12,7 +12,7 @@ public class PersonaService {
     @Autowired
     PersonaRepository personaRepository;
     public List<Persona> getPersonas(){
-        return (List<Persona>)personaRepository.findAll();
+        return (List<Persona>)personaRepository.findAll();        
     }
     public Optional<Persona> getPersona(Long id){
         return personaRepository.findById(id);
