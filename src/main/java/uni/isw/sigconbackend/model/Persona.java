@@ -1,10 +1,12 @@
 package uni.isw.sigconbackend.model;
 import jakarta.persistence.*;
 import java.sql.Date;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Entity
+@Builder
 @Table(name="persona")
 public class Persona {
     @Id
@@ -14,7 +16,7 @@ public class Persona {
     private String apellido_materno;
     private String nombres;    
     private Date fecha_nacimiento;
-    private Long id_tipo_documento;
+    private int id_tipo_documento;
     private String ndocumento;
     private String direccion;
     private String idubigeo;

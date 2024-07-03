@@ -55,29 +55,31 @@ public class PersonaController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)	 																		  
     public ResponseEntity<Persona> agregar(@RequestBody Persona persona){
 
-        logger.info(">agregar: " + persona.toString());        
+        logger.info(">agregar: " + persona.toString());      
+        Persona newpersona;
         try{                  
-            personaService.saveOrUpdate(persona);
+            newpersona=personaService.save(persona);
         } catch(Exception e){
             logger.error("Unexpected Exception caught. "+ e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         logger.info(">agregar: " + persona.toString()); 
-        return new ResponseEntity<>(persona, HttpStatus.OK);
+        return new ResponseEntity<>(newpersona, HttpStatus.OK);
     } 
     
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)	 																		  
     public ResponseEntity<Persona> actualizar(@RequestBody Persona persona){
 
         logger.info(">actualizar: " + persona.toString());                
+        Persona newpersona;
         try{             
-             personaService.saveOrUpdate(persona);
+             newpersona=personaService.saveOrUpdate(persona);
         } catch(Exception e){
             logger.error("Unexpected Exception caught. "+ e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         logger.info(">actualizar: " + persona.toString());                
-        return new ResponseEntity<>(persona, HttpStatus.OK);
+        return new ResponseEntity<>(newpersona, HttpStatus.OK);
     } 
     
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)	 																		  

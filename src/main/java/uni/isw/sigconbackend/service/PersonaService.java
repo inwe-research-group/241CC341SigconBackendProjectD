@@ -17,8 +17,11 @@ public class PersonaService {
     public Optional<Persona> getPersona(Long id){
         return personaRepository.findById(id);
     }
-    public void saveOrUpdate(Persona persona){
-        personaRepository.save(persona);
+    public Persona saveOrUpdate(Persona persona){
+        return personaRepository.save(persona);
+    }
+    public Persona save(Persona persona){
+        return personaRepository.save(persona);
     }
     public void delete(Long id){
         personaRepository.deleteById(id);
