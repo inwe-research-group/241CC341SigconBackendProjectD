@@ -1,6 +1,6 @@
 HELP.md
 target/
-src/test/
+src/test/**
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 #!**/src/test/**/target/
@@ -28,7 +28,7 @@ src/test/
 /.nb-gradle/
 build/
 !**/src/main/**/build/
-!**/src/test/**/build/
+#!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
