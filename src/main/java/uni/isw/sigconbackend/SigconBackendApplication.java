@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SigconBackendApplication {
 
 	public static void main(String[] args) {
-            System.out.println("Setting the timezone"+TimeZone.getTimeZone("GMT-5").getID());
+            //System.out.println("Setting the timezone"+TimeZone.getTimeZone("GMT-5").getID());
             TimeZone.setDefault(TimeZone.getTimeZone("GMT-5"));
             SpringApplication.run(SigconBackendApplication.class, args);                
 	}
