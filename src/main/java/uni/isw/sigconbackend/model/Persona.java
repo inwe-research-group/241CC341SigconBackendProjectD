@@ -23,10 +23,12 @@ public class Persona {
     
     @ManyToOne
     @JoinColumn(name = "id_tipo_documento", referencedColumnName = "id_tipo_documento",insertable=false, updatable=false )    
+    @Column(nullable=true, name="tipo_documento")
     private TipoDocumento tipo_documento;
     
     @ManyToOne
     @JoinColumn(name = "idubigeo", referencedColumnName = "idubigeo",insertable=false, updatable=false)    
+    @Column(nullable=true, name="ubigeo")
     private Ubigeo ubigeo;   
 
     public Persona() {
