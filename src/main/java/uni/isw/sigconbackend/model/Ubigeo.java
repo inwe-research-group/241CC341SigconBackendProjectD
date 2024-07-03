@@ -24,6 +24,7 @@ public class Ubigeo {
         this.departamento = departamento;
         this.provincia = provincia;
         this.distrito = distrito;
-    }
+    }   
+    
     
 }
