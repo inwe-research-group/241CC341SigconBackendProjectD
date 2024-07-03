@@ -13,6 +13,9 @@ public class TipoDocumento {
     private int id_tipo_documento;    
     private String descripcion;   
 
+    public TipoDocumento() {
+    }
+    
     public TipoDocumento(int id_tipo_documento, String descripcion) {
         this.id_tipo_documento = id_tipo_documento;
         this.descripcion = descripcion;
