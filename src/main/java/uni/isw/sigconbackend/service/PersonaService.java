@@ -26,4 +26,7 @@ public class PersonaService {
     public void delete(Long id){
         personaRepository.deleteById(id);
     }
+    public List<Persona> findByNdocumento(String ndocumento){
+        return personaRepository.findByNdocumento(ndocumento);
+    }
 }

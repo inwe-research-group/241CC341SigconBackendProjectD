@@ -125,9 +125,9 @@ public class PersonaRepositoryTest {
 
         personaRepository.save(persona);
 
-        Persona personaList = personaRepository.findById(persona.getId_persona()).get();
+        Persona personaResult = personaRepository.findById(persona.getId_persona()).get();
 
-        Assertions.assertThat(personaList).isNotNull();
+        Assertions.assertThat(personaResult).isNotNull();
     }
     
     @Test
@@ -177,6 +177,28 @@ public class PersonaRepositoryTest {
         Optional<Persona> personaReturn = personaRepository.findById(persona.getId_persona());
 
         Assertions.assertThat(personaReturn).isEmpty();
+    }
+    
+    @Test
+    public void PersonaRepository_searchByNdocumento() {
+        Long id_tipo_documento=tipodocumento.getId_tipo_documento();      
+        String idubigeo1=ubigeo1.getIdubigeo();        
+        Persona persona = Persona.builder()
+                .apellido_paterno("Chirinos")
+                .apellido_materno("Soto")
+                .nombres("Patricia")
+                .fecha_nacimiento(new Date(1992-04-05))
+                .id_tipo_documento(id_tipo_documento)
+                .ndocumento("998887766")
+                .direccion("Av. Guardia Chalaca 526")
+                .idubigeo(idubigeo1).build();   
+
+        personaRepository.save(persona);
+        
+        List<Persona> personaReturn = personaRepository.findByNdocumento(persona.getNdocumento());
+        Assertions.assertThat(personaReturn).isNotEmpty();         
+        Assertions.assertThat(personaReturn.size()).isEqualTo(1);
+        Assertions.assertThat(personaReturn.get(0).getNdocumento()).isEqualTo(persona.getNdocumento());
     }
 
 }

@@ -3,8 +3,8 @@ package uni.isw.sigconbackend.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import uni.isw.sigconbackend.model.Persona;
 import uni.isw.sigconbackend.model.TipoDocumento;
 import uni.isw.sigconbackend.model.Ubigeo;
-import uni.isw.sigconbackend.repository.TipoDocumentoRepository;
 import uni.isw.sigconbackend.service.PersonaService;
 
 @WebMvcTest(controllers = PersonaController.class)
@@ -43,17 +42,13 @@ public class PersonaControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     
-    @Autowired
-    private TipoDocumentoRepository tipoDocumentoRepository;
-    
     private Persona persona1, persona2;    
     
     @BeforeEach
     public void init() {
         TipoDocumento tipodocumento = TipoDocumento.builder()
-                .descripcion("DNI").build();       
+                .descripcion("DNI").build();               
         
-        tipoDocumentoRepository.save(tipodocumento);    
         Long id_tipo_documento=tipodocumento.getId_tipo_documento();   
         
         Ubigeo ubigeo=Ubigeo.builder()
@@ -112,4 +107,24 @@ public class PersonaControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()", CoreMatchers.is(2)));
         
     }
+    
+    @Test
+    public void PersonaController_searchByNdocumento() throws Exception {     
+        List<Persona> personaList=new ArrayList<>();
+        personaList.add(persona1);
+        
+        when(personaService.findByNdocumento(persona1.getNdocumento())).thenReturn(personaList);
+        Assertions.assertThat(personaList).isNotNull(); 
+        
+        ResultActions response = mockMvc.perform(get("/api/v1/persona/searchByNDocumento/"+persona1.getNdocumento())
+                .contentType(MediaType.APPLICATION_JSON)
+                );                
+
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()", CoreMatchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].ndocumento", CoreMatchers.is(personaList.get(0).getNdocumento())));
+                
+                
+    }   
+   
 }
