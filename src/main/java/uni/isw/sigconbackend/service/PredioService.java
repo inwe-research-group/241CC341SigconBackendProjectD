@@ -23,4 +23,7 @@ public class PredioService {
     public void delete(Long id){
         predioRepository.deleteById(id);
     }
+    public List<Predio> findByRuc(String ruc){
+        return predioRepository.findByRuc(ruc);
+    }
 }

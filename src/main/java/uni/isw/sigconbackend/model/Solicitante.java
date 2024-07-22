@@ -17,7 +17,7 @@ public class Solicitante {
     private Long id_solicitante;    
     private Long id_persona;    
     private Long id_rol;    
-    private String telefono;
+    private Long telefono;
     private String correo;
     
     @ManyToOne

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -94,4 +96,8 @@ public class PredioController {
         logger.info(">eliminar: " + predio.toString() );                
         return new ResponseEntity<>(predio.get(), HttpStatus.OK);
     } 
+    @GetMapping("/searchByRuc/{ruc}")
+    public ResponseEntity<List<Predio>> searchByRuc(@PathVariable String ruc) {
+        return new ResponseEntity<>(predioService.findByRuc(ruc), HttpStatus.OK);        
+    }
 }

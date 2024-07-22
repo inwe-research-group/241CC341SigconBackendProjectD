@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import uni.isw.sigconbackend.model.Persona;
 import uni.isw.sigconbackend.model.Solicitante;
 import uni.isw.sigconbackend.service.SolicitanteService;
 
@@ -56,23 +59,24 @@ public class SolicitanteController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)	 																		  
     public ResponseEntity<Solicitante> agregar(@RequestBody Solicitante solicitante){
 
-        logger.info(">agregar: " + solicitante.toString());        
+        logger.info(">agregar: " + solicitante.toString());   
+        Solicitante newsolicitante;
         try{                  
-            solicitanteService.saveOrUpdate(solicitante);
+            newsolicitante=solicitanteService.save(solicitante);
         } catch(Exception e){
             logger.error("Unexpected Exception caught. "+ e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         logger.info(">agregar: " + solicitante.toString()); 
-        return new ResponseEntity<>(solicitante, HttpStatus.OK);
+        return new ResponseEntity<>(newsolicitante, HttpStatus.OK);
     } 
     
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)	 																		  
     public ResponseEntity<Solicitante> actualizar(@RequestBody Solicitante solicitante){
 
-        logger.info(">actualizar: " + solicitante.toString());                
+        logger.info(">actualizar: " + solicitante.toString());                  
         try{             
-             solicitanteService.saveOrUpdate(solicitante);
+             solicitanteService.Update(solicitante);
         } catch(Exception e){
             logger.error("Unexpected Exception caught. "+ e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -96,4 +100,8 @@ public class SolicitanteController {
         logger.info(">eliminar: " + solicitante.toString() );                
         return new ResponseEntity<>(solicitante.get(), HttpStatus.OK);
     } 
+    @GetMapping("/searchByPersonaNDocumento/{ndocumento}")
+    public ResponseEntity<List<Solicitante>> findByPersonaNdocumento(@PathVariable String ndocumento) {
+        return new ResponseEntity<>(solicitanteService.findByPersonaNdocumento(ndocumento), HttpStatus.OK);        
+    }
 }

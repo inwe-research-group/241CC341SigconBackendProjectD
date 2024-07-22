@@ -19,10 +19,16 @@ public class SolicitanteService {
     public Optional<Solicitante> getSolicitante(Long id){
         return solicitanteRepository.findById(id);
     }
-    public void saveOrUpdate(Solicitante solicitante){
-        solicitanteRepository.save(solicitante);
+    public Solicitante save(Solicitante solicitante){
+        return solicitanteRepository.save(solicitante);
+    }
+    public Solicitante Update(Solicitante solicitante){
+        return solicitanteRepository.save(solicitante);
     }
     public void delete(Long id){
         solicitanteRepository.deleteById(id);
+    }
+    public List<Solicitante> findByPersonaNdocumento(String ndocumento){
+        return solicitanteRepository.findByPersonaNdocumento(ndocumento);
     }
 }
